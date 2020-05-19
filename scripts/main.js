@@ -9,10 +9,6 @@
   const CANVASHEIGHT = 150
   const CANVASID = 'canvas'
 
-  let mp3 = document.querySelector('#mp3');
-
-
-
   texts = [
     "你是藏在\n云层里的月亮", "也是我穷极一生寻找的宝藏", "有你在身边 风都超级甜",
     "星星掉进河里", "糖果掉进梦里", "而你掉进我心里",
@@ -22,7 +18,7 @@
     "星星醉酒到处跑", "月亮跌进深海里",
     "我以前从未觉得人间美好", "直到你来了",
     "星河满目琳琅", "可你是逆着风跑的星光",
-    "My Dear", "Happy Valentines Day", "Happy Not Only Today"];
+    "My Dear", "Happy Valentines Day！", "Happy Not Only Today"];
 
 
 
@@ -49,12 +45,12 @@
   let FontStyle = 'px \'STKaiti\', \'KaiTi\', \'Avenir\', \'Helvetica Neue\', \'Arial\', \'sans-serif\''
 
   if (!isPC) {
-    textSize = 40
+    textSize = 30
     FontStyle = 'px \'FangSong\', \'KaiTi\', \'SimSun\', \'NSimSun\', \'Arial\', \'sans-serif\''
   }
-  // if (!isChrome) {
-  //   $('#iframeAudio').remove()
-  // }
+  if (!isChrome) {
+    $('#iframeAudio').remove()
+  }
 
   function draw() {
     ctx.clearRect(0, 0, CANVASWIDTH, CANVASHEIGHT)
@@ -162,6 +158,16 @@
       text = texts[textIndex]
       console.log(textIndex)
     }, false)
+
+    document.addEventListener('touchstart', function (e) {
+      textIndex++
+      if (textIndex >= texts.length) {
+        textIndex--
+        return
+      }
+      text = texts[textIndex]
+      console.log(textIndex)
+    }, false)
   }
 
   function init() {
@@ -173,9 +179,6 @@
     setDimensions()
     event()
 
-    console.log(mp3);
-
-
     for (var i = 0; i < PARTICLE_NUM; i++) {
       particles[i] = new Particle(canvas)
     }
@@ -186,9 +189,9 @@
   class Particle {
     constructor(canvas) {
       let spread = canvas.height
-      let size = Math.random() * 2;
+      let size = Math.random() * 1.6;
       if (!isPC) {
-        size = 1.3;
+        size = 1;
       }
       // 速度
       this.delta = 0.06
@@ -265,4 +268,5 @@
   // setTimeout(() => {
   init()
   // }, 4000);
+  // mp3.play()
 })(window)
