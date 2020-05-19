@@ -9,11 +9,8 @@
   const CANVASHEIGHT = 150
   const CANVASID = 'canvas'
 
-  let texts = ['MY DEAR', 'LOOK UP AT THE', 'STARRY SKY', 'ARE YOU', 'LOOKING AT THE', 'SAME STAR', 'WITH ME ?', 'HAPPY', 'CHINESE', 'VALENTINE\'S', 'DAY', 'I MISS YOU']
-
-
   texts = [
-    "你是藏在云层里的月亮", "也是我穷极一生寻找的宝藏", "有你在身边 风都超级甜",
+    "你是藏在\n云层里的月亮", "也是我穷极一生寻找的宝藏", "有你在身边 风都超级甜",
     "星星掉进河里", "糖果掉进梦里", "而你掉进我心里",
     "世界很暗", "然后你来了 带着星星",
     "月亮有星星", "乌云有雨", "而你有我",
@@ -24,11 +21,7 @@
     "My Dear", "Happy Valentines Day！", "Happy Not Only Today"];
 
 
-  var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-  if (!isChrome) {
-    // 手机
-    $('#iframeAudio').remove()
-  }
+
   let canvas,
     ctx,
     particles = [],
@@ -36,6 +29,25 @@
     text = texts[0],
     textIndex = 0,
     textSize = 70
+
+  var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+  function IsPC() {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+      if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+    }
+    return flag;
+  }
+
+  if (!IsPC()) {
+    textSize = 50
+  }
+  if (!isChrome) {
+    $('#iframeAudio').remove()
+  }
 
   function draw() {
     ctx.clearRect(0, 0, CANVASWIDTH, CANVASHEIGHT)
@@ -174,7 +186,7 @@
   class Particle {
     constructor(canvas) {
       let spread = canvas.height
-      let size = Math.random() * 1.6
+      let size = Math.random() * 2
       console.log(size)
       // 速度
       this.delta = 0.06
